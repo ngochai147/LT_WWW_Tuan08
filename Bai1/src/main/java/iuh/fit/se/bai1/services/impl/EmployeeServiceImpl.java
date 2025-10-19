@@ -36,4 +36,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> findAll() {
         return this.employeeRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public void deleteById(int id) {
+        employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Employee> search(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty())
+            return employeeRepository.findAll();
+        return employeeRepository.search(keyword);
+    }
+
 }

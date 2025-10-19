@@ -8,15 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
+
 public class EmployeeController {
 
     @Autowired
@@ -31,11 +29,10 @@ public class EmployeeController {
         return modelAndView;
     }
 
-    @GetMapping("/show-form")
+    @GetMapping("/save")
     public String showForm(Model  model) {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
-
         return "register";
     }
 
@@ -44,11 +41,26 @@ public class EmployeeController {
 
         if (bindingResult.hasErrors()) {
             return "register";
+        }else{
+            employeeService.save(employee);
         }
+        return "redirect:/";
 
-        employeeService.save(employee);
-        return "redirect:";
     }
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id) {
+        employeeService.deleteById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/search")
+    public ModelAndView search(@RequestParam("keyword") String keyword, ModelAndView modelAndView) {
+        List<Employee> employees = employeeService.search(keyword);
+        modelAndView.addObject("employees", employees);
+        modelAndView.setViewName("list");
+        return modelAndView;
+    }
+
 
     @GetMapping("/update")
     public ModelAndView showFormUpdate(@RequestParam("employeeId") int id, ModelAndView modelAndView) {
@@ -59,7 +71,6 @@ public class EmployeeController {
             modelAndView.addObject("errorMessage", "Employee - not found");
         }
         else {
-
             modelAndView.addObject("employee", employee);
             modelAndView.setViewName("register");
         }

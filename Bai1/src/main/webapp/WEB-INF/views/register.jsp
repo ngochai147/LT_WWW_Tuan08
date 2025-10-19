@@ -122,13 +122,8 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label>Address</label>
-            <form:input path="address" placeholder="Address"/>
-        </div>
-
         <div class="button-group">
-            <a href="" class="btn btn-back">Back</a>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-back">Back</a>
             <button type="submit" class="btn btn-register">Register</button>
         </div>
     </form:form>

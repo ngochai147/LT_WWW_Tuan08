@@ -80,7 +80,7 @@
         <input type="text" name="keyword" placeholder="Search..."/>
         <button style="background:gray;padding:10px" type="submit">Search</button>
     </form>
-    <a href="${pageContext.request.contextPath}/show-form">Add Employee</a>
+    <a href="save">Add Employee</a>
 </div>
 
 <table>
@@ -105,7 +105,7 @@
             <td>${emp.email}</td>
             <td>${emp.phone}</td>
             <td class="action-link">
-                <a href="/update/${emp.id}">Update</a>
+                <a href="/update?employeeId=${emp.id}">Update</a>
                 <a href="/delete/${emp.id}">Delete</a>
             </td>
         </tr>
